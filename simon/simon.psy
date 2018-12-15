@@ -1,0 +1,58 @@
+options
+  bitmapdir stimuli 
+  fontdir stimuli
+
+bitmaps
+  intro
+  finalwords
+  left
+  right
+  fix
+  mistake
+
+fonts
+  arial 18
+
+table simontasktable # table with four rows, each trial one row is randomly chosen
+#-name of condition--------------position--stimulus--response
+  "left  leftresponse  compatible"     -200      left      1
+  "right leftresponse  incompatible"    200      left      1
+  "right rightresponse compatible"      200      right     2
+  "left  rightresponse incompatible"   -200      right     2
+
+task simon
+  table simontasktable                   # table to be used
+  keys a l                               # keys to be used
+  show bitmap fix                        # show fix point at screen center
+  delay 300                              # do nothing for 300 ms
+  show bitmap @3 @2 0                    # show imperative stimulus
+  readkey @4 5000                        # wait for key response up to 5 seconds
+  clear 1 2                              # remove stimuli
+  if STATUS != CORRECT                   # if you make an error
+    show bitmap mistake                  # show an error message at screen center
+    delay 1000                           # for 500 ms
+    clear 3                              # and then clear
+  fi                                     # end of if statement
+  delay 500                              # wait 100ms (here sort of intertrial time)
+  save TABLEROW @1 STATUS RT             # save data to file
+
+message intro
+
+block test    # this block is called "test"
+  delay 1000
+  tasklist
+    simon 30
+  end
+  feedback
+    text align left
+    set &RTCon mean c6 ; select ( c1 == 0 || c1 == 2 ) && c5 == 1 
+    set &RTInc mean c6 ; select ( c1 == 1 || c1 == 3 ) && c5 == 1
+    set &RTSimon expression &RTInc - &RTCon
+    text -300 -200 "Average response speed in conditions (correct trials only):"
+    text -300 -150  &RTCon ; prefix "Compatible: "   ; postfix " milliseconds"
+    text -300 -100 &RTInc ; prefix "Incompatible: " ; postfix " milliseconds"
+    text -300 -50  &RTSimon ; prefix "Incompatible - Compatible (Simon effect): " ; postfix " milliseconds"
+    text -300 100 "Press space bar to continue"
+  end
+
+message finalwords
