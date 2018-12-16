@@ -52,8 +52,8 @@ but it only takes pictures as argument.
 A simple way to create PNG:s with text is ImageMagics `convert`. Here is an
 example where the text is stored in `message.txt` and `message.png` is created:
 
-`convert -size 480x480 xc:black -font "FreeMono" -pointsize 18 -fill white \
--annotate +15+20 "-- Intructions-- \nPress 'a' for left and 'l' for right\n\n(press space to continue)" intro.png`
+`convert -size 800x600 xc:black -font "FreeMono" -pointsize 18 -fill white -gravity Center \
+-annotate +10+20 "-- Instructions--\n\nPress 'a' for left and 'l' for right\n\n(press space to continue)" intro.png`
 
 Use `convert -list font` to list the fonts that are installed.
 

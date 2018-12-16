@@ -1,0 +1,46 @@
+# the following is an example of a Simon task with feedback about
+# error rates and response times
+
+options
+  executable dentol
+  set &reacttime 0
+  set &dislike_like 0
+
+bitmaps
+  intro
+  selector
+
+fonts
+  arial 18
+
+task dentol
+  font arial
+  show text "Dentol toothpaste." 0 -80
+  show text "Fights gum disease." 0 0
+  show text "Kills germs that cause bad breath." 0 40
+  show text "Prevents cavities." 0 80
+  delay 5000
+  clear screen
+  mouse show
+  show bitmap selector -200 0
+  show bitmap selector  200 0
+  show text "Dentol toothpaste" 0 -100
+  show text "Dislike" -200 0
+  show text "Like"     200 0
+  readmouse l 1 5000							# l=left mouse button, 1=first stiumli, i.e. the left green rectangle, 5000=wait for 5secs
+  set $myMouseX MOUSE_X # current mouse x-coordinate
+  set $myMouseY MOUSE_Y # current mouse x-coordinate
+  set &dislike_like bitmap-under-mouse $myMouseX $myMouseY
+  set &reacttime RT
+  save TASKNAME TRIALCOUNT RT &dislike_like
+
+block main
+  message intro 
+  tasklist
+    dentol 1
+  end
+  feedback
+    text 0 0  &dislike_like  ; prefix "&dislike_like:" ; post "Dislike=1, Like=2"
+    text 0 20 &reacttime     ; prefix "&reacttime:"   ; postfix "ms"
+    text 0 60 "(press space to continue)"
+  end
