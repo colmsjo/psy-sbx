@@ -1,0 +1,19 @@
+options
+  executable expr
+
+fonts
+  arial 18
+
+task MyTask
+  font arial
+  set $s expression 10+10				# only ints are allowed in variables
+  show text $s
+  delay 1000
+ #  show text "cant concat two strings!"
+
+
+block testBlock
+  tasklist
+    MyTask 1
+  end
+

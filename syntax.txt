@@ -1,0 +1,389 @@
+PsyToolkit Version 2.5.2
+
+Overview of all commands of the PsyToolkit scripting language:
+
+* Commands can have parameters (arguments).
+  > Obligatory arguments are in [].
+  > Optional arguments ones in ().
+* Lines starting with "-" are future commands (not yet working).
+* Lines starting "#" are comments
+
+----------------------------------------------------------------------
+
+options  (this section is optional)
+  #-- directory options
+  bitmapdir [path]
+  datadir [path]
+  fontdir [path]
+  videodir [path]
+  sounddir [path]
+  #-- screen options
+  resolution [width][height]
+  fullscreen
+  window
+  screensize [width][height]
+  screendistance [distance]
+  coordinates [cartesian|polar]
+  origin [center|topleft]
+  update_freq [ms]
+  sprites first 
+  vsync (on|off)
+  check_refresh_rate [hz]
+  #-- misc
+  realtime (on|off)  
+  version [version number]
+  set &[name][value]
+  executable (path)[name]
+  startbutton text [some text]
+  loading text [some text]  
+  #-- web-based
+  var (in|out) [(&)varname][(&)varname]
+  #-- external device options
+  mouse [on]
+  escape (key)
+  parallelport [in|out]  [data|1|14|16|17]  [in|out]  [data|1|14|16|17]
+  pcidio24 [in|out]  [a|b|c|c_low|c_high]  [in|out]  [a|b|c|c_low|c_high]
+  cedrus (RB-530|RB-730|RB-830|RB-834)
+  iolab (voicekey duration silence trigger gain1 gain2 micpassthrough)
+  ultra
+  et [tobii] (Tobii_Tracker_id) # note "et" => abbreviation for eye-tracker
+
+  
+bitmaps (this section is optional)
+  [bitmapname] (path)[filename|data:image/...|https://...]
+
+sounds (this section is optional)
+  [soundname] (path)[filename]
+
+fonts (this section is optional)
+  [fontname] (path)[font-file-name.ttf] [fontsize]
+  [fontname] [arial|times|courier] [fontsize]
+  [arial|times|courier] [fontsize]
+
+table [tablename] (table sections are optional)
+  [tablerows](...)
+
+task [name] (there must be at least one task)
+  # c functions
+  c [ one line of c code ]
+  c-begin ( followed by new line and lines of c code )
+  c-end
+  c-file [filename]
+  # visual and auditory stimulus functions
+  draw [on|off]
+  font [fontname]
+  show bitmap [bitmapname] (xpos ypos)
+  show text [string] (xpos|ypos)(red green blue)
+  show rectangle [x y w h red green blue]
+  show circle [x y radius red green blue]
+  show background [red green blue]
+  show video [videoname] (once|loop)(xpos)(ypos)(width height)
+  #
+  rotate [next|stimulusnumber] [tenth_degrees]
+  # 
+  clear [number(s)] | screen | range[first][last]
+  hide [stimulusnumber]|range[first][last]
+  unhide [stimulusnumber]|range[first][last]
+  # optional setting of text attributes
+  text color [colorname|r g b|RRGGBB]
+  text align [center|left|right]
+  # videocontrol [videoname]  # continues next line...
+  #   [stop|pause|resume|play|on|loop|once|move|clear](xpos)(ypos)(width height)
+  sound [soundname]
+  silence [soundname]
+  # sprites functions (each sprite has number; N refers to this number)
+  sprite create [bitmapname]([xpos][ypos])([direction][speed]))
+  sprite [N] [bitmapname](xpos)(ypos)
+  sprite [N] display|hide|freeze|move|w|h
+  #
+  sprite [N] jump (xpos)(ypos)
+  sprite [N] move (to|towards) (xpos)(ypos)(speed)
+  sprite [N] move direction (angle)(speed)
+  sprite [N] move path (speed) x1 y1 ... xn yn
+  sprite [N] speed (speed)
+  sprite [N] accelerate (speed change)
+  sprite [N] bitmap [bitmapname]
+  #
+  sprite [N] evade
+  sprite [N] borders [left][right][top][bottom]
+  #
+  sprite [N] rotate (-)[speed]
+  sprite [N] rotate to [(-)degrees*10] [speed]
+  sprite [N] rotate now [degrees]
+  #
+  sprite [N] hscroll (-)[speed]
+  #  
+  sprites [delete|freeze|unfreeze|display|hide|evade|bounce(borders|sprites)|borders|update] all
+  reset_sprites_timer
+  # control functions
+  if [conditional expression]
+   [...]
+  fi
+  while [conditional expression]
+   [...]
+  while-end
+  end [task|tasklist|experiment]
+  # condition selection related function
+  table [tablename]
+  # time related functions
+  delay [time]
+  nap
+  timestamp [timestampname]
+  # keyboard functions
+  keys [list of keycodes] # use only once at top of task description!
+  keystatus (correct number in keyslist 1..n)
+  readkey [correct number in keyslist 1..n][maxtime]
+  # readkeys (more than one key)
+  readkeys option spaces [n]
+  readkeys option [show|hide]
+  readkeys option font [fontname]
+  readkeys [correct_word][maxtime]
+  # mouse functions
+  mousestatus
+  readmouse (l|m|r)[bitmap|sprite][maxtime](range [begin][end])
+  mouse [show|hide](x y)
+  # choose with mouse functions 
+  choose option select [bitmap]
+  choose option minselect [number]
+  choose option maxselect [number]
+  choose option exit [bitmap-ok][bitmap][x][y]
+  choose option sprites
+  choose option keep  
+  choose [maxtime](stimulus_numbers...)
+  # rate
+  rate option pos [x][y]
+  rate option labels [left_bitmap][right_bitmap]
+  rate option items [bitmap]
+  rate option between [pixels]
+  rate [maxtime] [n_items]
+  # special device funtions --------------------------------------
+  parallelport [set|clear][pinnumber](pinnumber)(pinnumber)(etc)
+  pcidio24 set [a|b|c] [value 0-255]
+  #
+  cedrus readkey [button][max time]
+  cedrus status
+  cedrus clear
+  cedrus reset
+  #
+  iolab readkey [button][max time]
+  iolab status
+  iolab clear
+  iolab reset
+  #
+  ultra readykey [button][max time]
+  ultra status
+  # et is abbreviation for eye tracker
+  et allow [pixels]
+  et look [stimulusnumber] [maxtime]
+  et hold [stimulus-number] [maxtime-to-get][maxtime-to-hold]  
+  et display eyes
+  et hide eyes  
+  et start
+  et stop
+  et events [number] [number]
+  -et fix [stimulus#]
+  -et free
+  -et status  
+  -et follow [sprite-number] [maxtime]
+  # -- variable setting functions -----------------
+  set # does not all fit on one line, therefore on multiple lines:
+     [$|&]
+     [variablename]
+     [
+       [integer_value]                     | 
+       [$|&][other-variable-name]          |
+       random[lowest][highest](stepsize)   |
+       random from (...)                   |
+       expression [...]                    |
+       c-expression [...]                  |
+       increase|decrease (value)           |
+       pcidio24 [a|b|c]                    |
+       time-since-start                    |
+       timestamp-diff [1][2]               |
+       timestamp-seconds [timestamp]       |
+       timestamp-milliseconds [timestamp]  |
+       bitmap-under-mouse (x y) (up|down)(range [begin][end])|
+       sprite-x [sprite number]            |
+       sprite-y [sprite number]            |
+       show-counter
+       chosen-of [...]
+     ]
+     
+     TODO CHECK stimulus-x
+
+  error
+  # data output function
+  save [valuelist] # this should ideally be last statement in a task description!
+  # include code
+  part [part-name]
+
+message [bitmapname](keycode|mouse)
+
+block [blockname]
+  bitmap [bitmapname]
+  bitmap_from_file [filename]
+  c [ one line of c code ]
+  clear screen
+  message [bitmapname](key)
+  pager option [mouse [back_img X Y next_img X Y quit_img X Y]]
+  pager [bitmapname1](bitmapname2 etc ...)
+  set
+  &[variablename][int_value|random[lowest][highest](stepsize)|c-expression|increase|from-file]
+  system [systemcall]
+  maxtime [msecs](m)(s)
+  tasklist
+    [taskname][n]
+    [taskname][n](correct[maxn])(allcorrect[maxn])(repeat_on_error)
+    [taskname][n](fixed|no_repeat|all_before_repeat)
+  end
+  wait_for_key (key)
+  delay [milliseconds]
+  not in web version: continue_repeat_keys (continue key)(repeat key)
+  feedback
+    <see feedback syntax below>
+  end
+  et calibrate [5|10|28]
+  et [show|hide] eyes
+  # include code
+  part [part-name]
+
+feedback
+  text color [colorname|r g b|RRGGBB]
+  text align [center|left|right]
+  text [xpos][ypos]["literal text in quotes"]
+  text [xpos][ypos][&variable] (; prefix [text] ; postfix [text] ; )
+  set [variablename] [mean|sum|perc|min|max|count][c?] ( ; select c? == value )
+  set [variablename] expression [expression]
+  save [valuelist]
+  lineplot [c?] ( ; colors c? ; select c? == value ; xlabel text ; ylabel text )
+  xyplot [c?][c?] (; xlabel text ; ylabel text ; select c? == value )
+  wait_for_key (key|mouse) # optional
+end
+
+include [filename]
+
+part [part-name]
+  (code...)
+
+blockorder
+  blockname1
+  blockname2
+  ...
+  blockname10
+
+-------------------------------------------------------------------------------
+
+notes about blockorder:
+  - if you have 1 blockorder, that blockorder will be used
+
+  the following two functions will be implemented in a later version
+  - if you have more than 1 blockorder, one will chosen randomly
+  - you can give blockorder as parameter "-b" to executable
+
+-------------------------------------------------------------------------------
+
+USE OF MULTIPLE SCRIPT FILES:
+
+Any line starting with "include" followed by a file will include that
+file into the script. The include file must be in the same directory
+as the PsyToolkit script file. Included files cannot include include
+files themselves (i.e., not recursive including).
+
+-------------------------------------------------------------------------------
+
+SPECIAL VARIABLES AVAILABLE IN TASK:
+  RT          last response time, from readkey or readmouse
+  TT          release time (time it takes to release the key. TT > RT)
+  EXTRT       same as RT, but measures by external keyboard (Cedrus or IOLab)
+  EXTTT       same as TT, but measures by external keyboard (Cedrus or IOLab)
+  STATUS      from readkey, can be CORRECT|WRONG|TIMEOUT
+  TABLEROW    randomly chosen once per trial
+  KEY         the key that has been pressed in last readkey/keystatus
+  KEYPRESSED  1 if key is pressed, 0 if not; currently only for IoLab & Cedrus
+  MOUSE_X     the X position of the mouse in last readmouse statement
+  MOUSE_Y     the Y position of the mouse in last readmouse statement
+  -GAZE_X      the X position of gaze (when using eye tracker)
+  -GAZE_Y      the X position of gaze (when using eye tracker)  
+  RATE        The chosen value of rating scale
+  RATE_RT     The RT of the rating process
+  RATE_STATUS 1 if rated or 3 if timeout
+  VSYNC_DELAY the time waited for a vsync signal (available following
+              each show command)
+  BLOCKNUMBER the number of the current block. Starts with
+              1. Important note: unlikely event that there is more
+              than one tasklist in a BLOCK (not recommended), the
+              BLOCKNUMBER is still increased.
+  BLOCKORDER  Is normally 1, but if multiple blockorders defined, gives
+              the number of the randomly chosen blockorder
+  TASKNAME    the name of the task the trial is in
+  BLOCKNAME   the name of the current block the trial is in
+  TRIALCOUNT  the number of trials so far in any task
+ 
+CONDITIONAL EXPRESSIONS IN IF AND WHILE STATEMENTS
+  at least 3 seperate parameters can be used, for example: RT < 5
+
+  parameters 1 and 3 can be variables or values.  Variables can be
+  local or global variables, or special variables.
+
+  parameter 2 is something like "==" (but even "=" is allowed).
+
+  operators in conditional expressions can be.
+  and , or you can use &&
+  or , or you can use ||
+
+VARIABLE REFERAL
+  variables defined in set should start with $ or &
+  $ are local variable (used in one trial only)
+  & are global variable, which can also be set in the block section
+  values chosen from a tablerow should start with @
+
+TABLE ENTRIES CAN BE ONE OF THE FOLLOWING
+  strings with " "
+  integers
+  bitmaps/sounds
+
+XPOS and YPOS specify the position of stimuli on the screen.  Specify
+  a number in accordance with the chosen coordinate system.  Or use
+  CENTER, for choosing the screen centered position (for X
+  and/or Y).  Per default, coordinates are cartesian with 0,0 being the
+  top left corner.  The option centerzero make 0,0 the center of the
+  screen.  In polar, 0,0 is the screen and the coordinates are in
+  1/100th of a degree.
+
+EXPRESSION 
+  You can "set" values using a formula. All common functions are
+  supported (see documentation). You can also use PsyToolkit local and
+  global variables or special variables (e.g., RT or STATUS) and table
+  entries (assuming they are not strings).
+
+C-EXPRESSION (replaced by EXPRESSION since 1.4.3 and not recommended)
+  You can use plain c.  Refer to script variables with a ^, for example
+  set $x c-expression abs 100 + ^RT - ^$myvariable
+  This will take the RT from the last readkey
+  Make sure that they are at least 1 spc apart from other c-code!
+  Do not use a semicolon at the end of the expression (although it
+  does not hurt).
+
+KEY CODES
+  -- shift keys --
+  lshift rshift
+  -- control keys --
+  lcontrol rcontrol
+  -- alt keys --
+  lalt ralt
+  -- logo keys --
+  lsuper rsuper
+  -- special keys --
+  enter capslock tab
+  space end home insert
+  escape slash backslash quote comma period
+  -- arrow keys --
+  up down right left
+  --numerical keyboard (keypad)--
+  kp0 kp1 kp2 kp3 kp4 kp5 kp6 kp7 kp8 kp9
+  kp_period kp_slash kp_star kp_minus kp_plus kp_enter
+  -- alphanumerical keys --
+  a to z, 0 to 9
+
+TEXT COLOR NAMES (for "text color")
+  red,green,blue,white,yellow,pink,purple,black,orange

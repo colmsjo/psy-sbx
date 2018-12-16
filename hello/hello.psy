@@ -4,8 +4,6 @@ options
 fonts
   arial 18
   myfont times 20
-#  mysmallfont arial.ttf 20
-#  mybigfont   arial.ttf 40
 
 task MyTask
   font arial
