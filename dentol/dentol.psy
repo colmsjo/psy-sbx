@@ -40,6 +40,7 @@ block main
     dentol 1
   end
   feedback
+    text 0 -100 "!! For debugging purposes, remove before using with live subjects !!"
     text 0 0  &dislike_like  ; prefix "&dislike_like:" ; post "Dislike=1, Like=2"
     text 0 20 &reacttime     ; prefix "&reacttime:"   ; postfix "ms"
     text 0 60 "(press space to continue)"
