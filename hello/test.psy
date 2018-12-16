@@ -1,0 +1,19 @@
+bitmaps
+    myface
+    yourface
+    smileyface
+
+task testTask
+  show bitmap yourface -100 0
+  show bitmap smileyface 200 200 ## second bitmap
+  readmouse l 1 1000
+  set $myMouseX MOUSE_X # current mouse x-coordinate
+  set $myMouseY MOUSE_Y # current mouse x-coordinate
+  set $x bitmap-under-mouse $myMouseX $myMouseY ## $x should be 1
+  delay 10000
+
+block testBlock
+  tasklist
+    testTask 1
+  end
+

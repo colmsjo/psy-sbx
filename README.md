@@ -12,6 +12,11 @@ psyquest -s
 psyquestcollect -h
 ```
 
+Compile scripts with: `psycc -V -t test.psy`. `-V` shows the output of the compiler (which otherwise isn't showed!)
+and `-t` prevents the compiler from making the script owned by `root`.
+
+
+
 ## Installation
 
 Running Linux Mint xfce version 19.
