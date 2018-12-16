@@ -1,0 +1,76 @@
+# in this task, a 3x3 grid is shown with 9 possible places (counted
+# from position 1 to position 9). You need to remember the locations
+# of the 3 crosses. When the question marks appear, you need to select
+# the 3 original locations based on your memory.
+
+bitmaps
+  instruction
+  frame
+  cross
+  question
+  selector
+  welldone
+  errorfeedback
+  exitbitmap1
+  exitbitmap2
+  
+# in the table, first the three positions (1-9) and then their actual x,y coordinates
+
+table places
+  1 2 3   -200 -200   0 -200     200 -200    
+  2 4 6      0 -200   -200 0     200 0
+  4 5 9   -200  0     0 0        200 200
+  1 7 9   -200 -200   -200 200   200 200
+  
+task memorize
+  table places
+  mouse hide
+  draw off
+    show bitmap frame
+    show bitmap cross @4 @5
+    show bitmap cross @6 @7
+    show bitmap cross @8 @9
+  draw on
+  #-----------------------------  
+  delay 1000 # morize
+  #-----------------------------  
+  draw off
+    show bitmap question -200 -200 # position 1 , stimulus 5
+    show bitmap question    0 -200 # position 2
+    show bitmap question  200 -200 # position 3
+    show bitmap question -200    0 # position 4
+    show bitmap question    0    0 # position 5
+    show bitmap question  200    0 # position 6
+    show bitmap question -200  200 # position 7
+    show bitmap question    0  200 # position 8
+    show bitmap question  200  200 # position 9 , stimulus 13
+  draw on
+  #-----------------------------
+  mouse show
+  choose option exit exitbitmap1 exitbitmap2 350 250
+  choose option minselect 3  
+  choose option maxselect 3
+  choose option select selector
+  choose 99999 5 13
+  #-----------------------------
+  # CHOSEN_1 etc start at value 5 (5th bitmap shown)
+  # It is easier if they start with 1 for table comparison
+  set $x1 expression CHOSEN_1 - 4
+  set $x2 expression CHOSEN_2 - 4
+  set $x3 expression CHOSEN_3 - 4
+  #-----------------------------
+  if $x1 == @1 && $x2 == @2 && $x3 == @3
+    show bitmap welldone
+  fi
+  if $x1 != @1 || $x2 != @2 || $x3 != @3
+    show bitmap errorfeedback
+  fi
+  delay 2000
+  clear screen  
+  save RT CHOSEN_N CHOSEN_1 CHOSEN_2 CHOSEN_3
+
+block test
+  message instruction
+  tasklist
+    memorize 3 fixed
+  end
