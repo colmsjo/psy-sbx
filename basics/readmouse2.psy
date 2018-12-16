@@ -1,0 +1,21 @@
+options
+  executable readmouse2
+
+fonts
+  arial 18
+  myfont times 20
+
+task MyTask
+  mouse show
+  show rectangle -200 0 40 40  0 255 0 					# green rect, left
+  show rectangle  200 0 40 40  255 0 0 					# red rect, right
+  show text "Click the green rectangle" 0 -100
+  show text "Check the data file for your reaction time" 0 -120
+  readmouse l 1 5000							# l=left mouse button, 1=first stiumli, i.e. the left green rectangle, 5000=wait for 5secs
+  save STATUS RT
+
+block testBlock
+  tasklist
+    MyTask 1
+  end
+
