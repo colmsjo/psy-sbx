@@ -2,4 +2,4 @@ psy() {
     psycc -V -t -n "$1"
 }
 
-alias clean='rm *.data *.data.~?~'
+alias clean='rm *.data *.data.~?~ *.c'
