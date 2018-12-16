@@ -35,7 +35,8 @@ I'd suggest having a look at the `basics` folder and check out the files in the 
 Then have a look at the `simon`, `simon_touch` and `choose` experiments.
 
 NOTE: Some aspects of the Psytoolkit scripting language might seam unintuitive if you have some programming experience.
-Variables only handles int and variable assignment is a bit odd. You'll see this when going through the files listed above.
+Variables only handles ints and variable assignment is a bit odd. You'll see this when going through the files listed above.
+Also `@n` referes to column `n` in the `table` used in `task` (see the `choose` experiment).
 
 
 ## Tips and tricks
