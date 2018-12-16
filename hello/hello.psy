@@ -1,0 +1,22 @@
+options
+  executable hello
+
+fonts
+  arial 18
+  myfont times 20
+#  mysmallfont arial.ttf 20
+#  mybigfont   arial.ttf 40
+
+task MyTask
+  font arial
+  show text "hello"
+  delay 1000
+  font myfont
+  show text "world"
+  delay 1000
+
+block testBlock
+  tasklist
+    MyTask 1
+  end
+

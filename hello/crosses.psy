@@ -1,0 +1,24 @@
+options
+  executable crosses
+
+bitmaps
+    cross
+
+task MyTask  
+  show bitmap cross
+  delay 1000
+  clear 1
+  delay 1000
+  show bitmap cross
+  delay 1000
+  clear 2
+  delay 1000
+
+
+block testBlock
+  tasklist
+    MyTask 1
+  end
+
+
+

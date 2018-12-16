@@ -1,0 +1,15 @@
+options
+  executable cross
+
+bitmaps
+    cross
+
+task testTask
+  show bitmap cross 0 0
+  delay 3000
+
+block testBlock
+  tasklist
+    testTask 1
+  end
+
