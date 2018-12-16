@@ -32,7 +32,7 @@ I'd suggest having a look at the `basics` folder and check out the files in the 
 7. `readmouse(2|3).psy`
 8. `feedback.psy`
 
-Then have a look at the `simon` and `simon_touch` experiments.
+Then have a look at the `simon`, `simon_touch` and `choose` experiments.
 
 NOTE: Some aspects of the Psytoolkit scripting language might seam unintuitive if you have some programming experience.
 Variables only handles int and variable assignment is a bit odd. You'll see this when going through the files listed above.

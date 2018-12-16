@@ -3,6 +3,9 @@
 # of the 3 crosses. When the question marks appear, you need to select
 # the 3 original locations based on your memory.
 
+options
+  executable choose
+
 bitmaps
   instruction
   frame
