@@ -7,9 +7,21 @@ fonts
 task MyTask
   font arial
   set $s expression 10+10				# only ints are allowed in variables
-  show text $s
+  show text "10+10 is" 0 0
+  show text $s 0 20
+  delay 3000
+  clear screen
   delay 1000
- #  show text "cant concat two strings!"
+  show text "Can't"  0 -20
+  show text "concat" 0 0
+  show text "strings!"  0 20
+  delay 3000
+  clear screen
+  delay 1000
+  set $s random 1 100
+  show text "random 1 100 is" 0 0
+  show text $s 0 20
+  delay 3000
 
 
 block testBlock

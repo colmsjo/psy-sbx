@@ -1,0 +1,23 @@
+options
+  executable strings
+
+fonts
+  arial 18
+
+task MyTask
+  font arial
+  text color yellow
+  text align center
+  show text "Some text with alignment: center"  0 -100
+  text align left
+  show text "Some text with alignment: left" 0 0
+  text align right
+  show text "Some text with alignment: right"  0 100
+  delay 3000
+
+
+block testBlock
+  tasklist
+    MyTask 1
+  end
+
