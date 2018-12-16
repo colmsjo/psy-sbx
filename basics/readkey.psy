@@ -1,0 +1,30 @@
+options
+  executable readkey
+  set &reacttime 0
+  set &ttime 0
+  set &status 0
+
+
+fonts
+  arial 18
+
+task MyTask
+  font arial
+  keys a z
+  show text "Press one of the keys 'a' and 'z'"
+  readkey 2 3000
+  set &reacttime RT
+  set &ttime TT
+  set &status STATUS
+
+block testBlock
+  tasklist
+    MyTask 1
+  end
+  feedback
+    text 0 0 &reacttime ; prefix "Your reaction time:" ; postfix "ms"
+    text 0 20 &ttime ; prefix "Your ttime:" ; postfix "ms"
+    text 0 40 &status ; prefix "Your status:" ; postfix " (1=CORRECT, 2=WRONG, 3=TIMEOUT)"
+    text 0 80 "(press space to quit!)"
+  end
+

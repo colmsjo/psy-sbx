@@ -1,0 +1,26 @@
+options
+  executable readmouse3
+  set &reacttime 0
+
+fonts
+  arial 18
+
+task MyTask
+  font arial
+  mouse show
+  show rectangle -200 0 40 40  0 255 0 					# green rect, left
+  show rectangle  200 0 40 40  255 0 0 					# red rect, right
+  show text "Position mouse over the green rectangle" 0 -100
+  show text "Check the data file for your reaction time" 0 -120
+  readmouse 1 5000							# 1=first stiumli, i.e. the left green rectangle, 5000=wait for 5secs
+  save STATUS RT
+  set &reacttime RT
+
+block testBlock
+  tasklist
+    MyTask 1
+  end
+  feedback
+    text 0 0 &reacttime ; prefix "Your reaction time:" ; postfix "ms"
+    text 0 20 "(press space to quit!)"
+  end
