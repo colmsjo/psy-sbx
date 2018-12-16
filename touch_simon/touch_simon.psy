@@ -1,0 +1,70 @@
+## Samsung J5 has 1280x720 resolution. In fullscreen it will still be
+## 640x360, that is what images are scaled to.
+
+options
+  resolution 640 360
+  mouse on
+  fullscreen
+  
+bitmaps
+  cover
+  i1
+  i2
+  i3
+  i4
+  i5
+  i6
+  i7
+  mistake
+  
+fonts
+  arial 18
+  
+table simontasktable
+  "congruent   red "  1 1  255   0   0   255 255 255 #red
+  "incongruent red "  1 2  255 255 255   255   0   0 #red
+  "congruent   green" 2 1  255 255 255     0 255   0 #green
+  "incongruent green" 2 2  0   255   0   255 255 255 #green
+
+task simon
+  table simontasktable # the table that describes conditions 
+  draw off
+    show circle -200 0 50   @4 @5 @6
+    show circle  200 0 50   @7 @8 @9
+  draw on
+  readmouse l @2 5000
+  set $XX MOUSE_X
+  set $YY MOUSE_Y
+  clear 1 2
+  # if STATUS != CORRECT
+  if STATUS = 2 || STATUS = 3
+    show bitmap mistake 
+    delay 1200
+    clear -1
+  fi
+  delay 500                              
+  save BLOCKNAME @1 @3 TABLEROW STATUS RT $XX $YY
+
+block test
+  message cover mouse
+  message i1 mouse
+  message i2 mouse
+  message i3 mouse
+  message i4 mouse
+  message i5 mouse
+  message i6 mouse
+  message i7 mouse
+  tasklist
+    simon 30
+  end
+  feedback
+    text align left
+    set &Con mean c7 ; select c4 == 1
+    set &Inc mean c7 ; select c4 == 2
+    set &SimonEffect expression &Inc - &Con
+    text -200 -150 "Your personal Simon task results"
+    text -200  -50 &Con ; prefix "Congruent: " ; postfix " ms"
+    text -200   50 &Inc ; prefix "Incongruent: " ; postfix " ms"    
+    text -200  150 &SimonEffect ; prefix "Simon effect: " ; postfix " ms"    
+    wait_for_key mouse
+  end
