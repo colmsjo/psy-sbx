@@ -11,6 +11,7 @@ task MyTask
   font arial
   show text "hello"
   delay 1000
+  clear 1
   font myfont
   show text "world"
   delay 1000
