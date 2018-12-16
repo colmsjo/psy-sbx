@@ -4,7 +4,6 @@ options
   set &ttime 0
   set &status 0
 
-
 fonts
   arial 18
 
@@ -20,7 +19,7 @@ task MyTask
 
 block testBlock
   tasklist
-    MyTask 1
+    MyTask 3
   end
   feedback
     text 0 0 &reacttime ; prefix "Your reaction time:" ; postfix "ms"
