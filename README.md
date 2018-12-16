@@ -18,6 +18,26 @@ and `-t` prevents the compiler from making the script owned by `root` and `-n` r
 Run `source setup.sh` and then compile with `psy test.psy` and the flags are set automaticllay. `clean` will cleanup 
 and remove data files etc (this should only be used when developing!).
 
+## Learn psytoolkit from scratch
+
+I put this repo together while learning psytoolkit without previous knowledge. If you're in the same position, 
+I'd suggest having a look at the `basics` folder and check out the files in the following order:
+
+1. `hello.psy`
+2. `cross.psy`
+3. `crosses.psy`
+4. `strings.psy`
+5. `expr.psy`
+6. `readkey.psy`
+7. `readmouse(2|3).psy`
+8. `feedback.psy`
+
+Then have a look at the `simon` and `simon_touch` experiments.
+
+NOTE: Some aspects of the Psytoolkit scripting language might seam unintuitive if you have some programming experience.
+Variables only handles int and variable assignment is a bit odd. You'll see this when going through the files listed above.
+
+
 ## Tips and tricks
 
 The `message` command can be used to show an introduction for the test subject but it only takes pictures as argument.
