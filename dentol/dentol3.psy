@@ -17,6 +17,10 @@ bitmaps
 fonts
   arial 18
 
+#
+# tables
+# -------
+
 table dentolStatements
   "Dentol toothpaste." "Fights gum disease."                         # row1
   "Dentol toothpaste." "Kills germs that cause bad breath."          # row2
@@ -37,12 +41,26 @@ table coverAdjectives
   "BrandX." "Positive" "Negative"
   "BrandY." "Good"     "Bad"
 
+#
+# tasks
+# -------
+
 task elabInstr
   font arial
   show text "Describe high vs low elaboration."  0   0
   delay 5000
 
-task dentolIntro
+task coverInstr
+  font arial
+  show text "Describe that misc brands will be tested."  0   0
+  delay 5000
+
+task dentolInstr
+  font arial
+  show text "Describe that our brand will be tested."  0   0
+  delay 5000
+
+task dentolMessage
   font arial
   show text "Dentol toothpaste."                 0 -80
   show text "Fights gum disease."                0   0
@@ -110,21 +128,35 @@ task dentolAdjectives
   set &falseTrue RT
   save TASKNAME TRIALCOUNT RT &falseTrue
 
+#
+# blocks
+# -------
+
 block intro
   message intro
   tasklist
     elabInstr 1
   end
 
-block dentolIntro
+block dentolMessag
   tasklist
-    dentolIntro 1
+    dentolMessage 1
+  end
+
+block coverInstr
+  tasklist
+    coverInstr 1
   end
 
 block coverStatementsAdjectives
   tasklist
     coverStatements 1
     coverAdjectives 1
+  end
+
+block dentolInstr
+  tasklist
+    dentolInstr 1
   end
 
 block dentolStatementsAdjectives
