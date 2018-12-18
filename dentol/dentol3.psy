@@ -60,6 +60,12 @@ task dentolInstr
   show text "Describe that our brand will be tested."  0   0
   delay 5000
 
+task thankYouMessage
+  font arial
+  show text "Thanks for participating in out study!"  0   0
+  delay 5000
+
+
 task dentolMessage
   font arial
   show text "Dentol toothpaste."                 0 -80
@@ -82,7 +88,7 @@ task coverStatements
   set $mouseY MOUSE_Y                                   # current mouse x-coordinate
   set &falseTrue bitmap-under-mouse $mouseX $mouseY     # 1=Fasle, 2=True
   set &falseTrue RT
-  save TASKNAME TRIALCOUNT RT &falseTrue
+  save TASKNAME TABLEROW TRIALCOUNT RT &falseTrue
 
 task coverAdjectives
   table coverAdjectives
@@ -90,45 +96,47 @@ task coverAdjectives
   mouse show
   show bitmap selector           -100  40
   show bitmap selector            100  40
-  show text "XBrand toothpaste"     0 -80
-  show text "Dislike"            -100  40
-  show text "Like"                100  40
-  readmouse l 1 10000                                   # l=left mouse button, 1=first stiumli correct, 5000=wait for 5secs
-  set $mouseX MOUSE_X                                   # current mouse x-coordinate
-  set $mouseY MOUSE_Y                                   # current mouse x-coordinate
-  set &dislikeLike bitmap-under-mouse $mouseX $mouseY  # 1=Dislike, 2=Like
+  show text @1                      0 -80
+  show text @2                   -100  40
+  show text @3                    100  40
+  readmouse l 1 10000
+  set $mouseX MOUSE_X
+  set $mouseY MOUSE_Y
+  set &dislikeLike bitmap-under-mouse $mouseX $mouseY
   set &reactTime RT
-  save TASKNAME TRIALCOUNT RT &dislikeLike
+  save TASKNAME TABLEROW TRIALCOUNT RT &dislikeLike
 
 task dentolStatements
+  table dentolStatements
   clear screen
   mouse show
   show bitmap selector           -100  40
   show bitmap selector            100  40
-  show text "Dentol toothpaste"     0 -80
-  show text "Dislike"            -100  40
-  show text "Like"                100  40
-  readmouse l 1 10000					# l=left mouse button, 1=first stiumli correct, 5000=wait for 5secs
-  set $mouseX MOUSE_X                                   # current mouse x-coordinate
-  set $mouseY MOUSE_Y                                   # current mouse x-coordinate
-  set &dislikeLike bitmap-under-mouse $mouseX $mouseY  # 1=Dislike, 2=Like
-  set &reactTime RT
-  save TASKNAME TRIALCOUNT RT &dislikeLike
-
-task dentolAdjectives
-  clear screen
-  mouse show
-  show bitmap selector           -100  40
-  show bitmap selector            100  40
-  show text "Dentol toothpaste fights gum disease"     0 -80
+  show text @1                      0 -80
   show text "False"              -100  40
   show text "True"                100  40
+  readmouse l 1 10000					                          # l=left mouse button, 1=first stiumli correct, 10000=wait for 10secs
+  set $mouseX MOUSE_X                                   # current mouse x-coordinate
+  set $mouseY MOUSE_Y                                   # current mouse x-coordinate
+  set &dislikeLike bitmap-under-mouse $mouseX $mouseY   # 1=Dislike, 2=Like
+  set &reactTime RT
+  save TASKNAME TABLEROW TRIALCOUNT RT &dislikeLike
+
+task dentolAdjectives
+  table dentolAdjectives
+  clear screen
+  mouse show
+  show bitmap selector           -100  40
+  show bitmap selector            100  40
+  show text @1                      0 -80
+  show text @2                   -100  40
+  show text @3                    100  40
   readmouse l 1 10000                                   # l=left mouse button, 1=first stiumli correct, 5000=wait for 5secs
   set $mouseX MOUSE_X                                   # current mouse x-coordinate
   set $mouseY MOUSE_Y                                   # current mouse x-coordinate
   set &falseTrue bitmap-under-mouse $mouseX $mouseY     # 1=Fasle, 2=True
   set &falseTrue RT
-  save TASKNAME TRIALCOUNT RT &falseTrue
+  save TASKNAME TABLEROW TRIALCOUNT RT &falseTrue
 
 #
 # blocks
@@ -172,4 +180,9 @@ block dentolStatementsAdjectives
     text 0 20  &falseTrue    ; prefix "&falseTrue:"   ; postfix " (False=1, True=2)"
     text 0 40 &reactTime    ; prefix "&reactTime:"   ; postfix " (ms)"
     text 0 80 "(press space to continue)"
+  end
+
+block thankYouMessage
+  tasklist
+    thankYouMessage 1
   end
