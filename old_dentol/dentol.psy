@@ -1,0 +1,50 @@
+# dentol.psy
+#
+# 181216, Jonas Colmsjö
+#
+# Study of strong vs weak attributes in a high vs low elaboration setting.
+
+options
+  executable dentol
+  set &reactTime   0
+  set &dislikeLike 0
+
+bitmaps
+  intro
+  selector
+
+fonts
+  arial 18
+
+task dentol
+  font arial
+  show text "Dentol toothpaste."                 0 -80
+  show text "Fights gum disease."                0   0
+  show text "Kills germs that cause bad breath." 0  40
+  show text "Prevents cavities."                 0  80
+  delay 5000
+  clear screen
+  mouse show
+  show bitmap selector           -100  40
+  show bitmap selector            100  40
+  show text "Dentol toothpaste"     0 -80
+  show text "Dislike"            -100  40
+  show text "Like"                100  40
+  readmouse l 1 10000					# l=left mouse button, 1=first stiumli correct, 5000=wait for 5secs
+  set $mouseX MOUSE_X                                   # current mouse x-coordinate
+  set $mouseY MOUSE_Y                                   # current mouse x-coordinate
+  set &dislikeLike bitmap-under-mouse $mouseX $mouseY  # 1=Dislike, 2=Like
+  set &reactTime RT
+  save TASKNAME TRIALCOUNT RT &dislikeLike
+
+block main
+  message intro 
+  tasklist
+    dentol 1
+  end
+  feedback
+    text 0 -100 "!! For debugging purposes, remove before using with live subjects !!"
+    text 0 0  &dislikeLike  ; prefix "&dislikeLike:" ; postfix " (Dislike=1, Like=2)"
+    text 0 20 &reactTime    ; prefix "&reactTime:"   ; postfix " (ms)"
+    text 0 60 "(press space to continue)"
+  end
