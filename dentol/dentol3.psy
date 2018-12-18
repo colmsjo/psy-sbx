@@ -74,7 +74,7 @@ task dentolInstr
 
 task thankYouMessage
   font arial
-  show text "Thanks for participating in out study!"  0   0
+  show text "Thanks for participating in our study!"  0   0
   delay 5000
 
 task dentolMessage
