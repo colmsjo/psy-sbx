@@ -1,0 +1,121 @@
+# dentol.psy
+#
+# 181216, Jonas Colmsjö
+#
+# Study of strong vs weak attributes in a high vs low elaboration setting.
+
+options
+  executable dentol2
+  set &reactTime   0
+  set &dislikeLike 0
+  set &falseTrue   0
+
+bitmaps
+  intro
+  selector
+
+fonts
+  arial 18
+
+task elabInstr
+  font arial
+  show text "Describe high vs low elaboration."  0   0
+  delay 5000
+
+task panelA
+  font arial
+  show text "Dentol toothpaste."                 0 -80
+  show text "Fights gum disease."                0   0
+  show text "Kills germs that cause bad breath." 0  40
+  show text "Prevents cavities."                 0  80
+  delay 5000
+
+task coverPanelB
+  clear screen
+  mouse show
+  show bitmap selector           -100  40
+  show bitmap selector            100  40
+  show text "XBrand toothpaste"     0 -80
+  show text "Dislike"            -100  40
+  show text "Like"                100  40
+  readmouse l 1 10000                                   # l=left mouse button, 1=first stiumli correct, 5000=wait for 5secs
+  set $mouseX MOUSE_X                                   # current mouse x-coordinate
+  set $mouseY MOUSE_Y                                   # current mouse x-coordinate
+  set &dislikeLike bitmap-under-mouse $mouseX $mouseY  # 1=Dislike, 2=Like
+  set &reactTime RT
+  save TASKNAME TRIALCOUNT RT &dislikeLike
+
+task coverPanelC
+  clear screen
+  mouse show
+  show bitmap selector           -100  40
+  show bitmap selector            100  40
+  show text "X brand toothpaste prevents cavities"     0 -80
+  show text "False"              -100  40
+  show text "True"                100  40
+  readmouse l 1 10000                                   # l=left mouse button, 1=first stiumli correct, 5000=wait for 5secs
+  set $mouseX MOUSE_X                                   # current mouse x-coordinate
+  set $mouseY MOUSE_Y                                   # current mouse x-coordinate
+  set &falseTrue bitmap-under-mouse $mouseX $mouseY     # 1=Fasle, 2=True
+  set &falseTrue RT
+  save TASKNAME TRIALCOUNT RT &falseTrue
+
+task panelB
+  clear screen
+  mouse show
+  show bitmap selector           -100  40
+  show bitmap selector            100  40
+  show text "Dentol toothpaste"     0 -80
+  show text "Dislike"            -100  40
+  show text "Like"                100  40
+  readmouse l 1 10000					# l=left mouse button, 1=first stiumli correct, 5000=wait for 5secs
+  set $mouseX MOUSE_X                                   # current mouse x-coordinate
+  set $mouseY MOUSE_Y                                   # current mouse x-coordinate
+  set &dislikeLike bitmap-under-mouse $mouseX $mouseY  # 1=Dislike, 2=Like
+  set &reactTime RT
+  save TASKNAME TRIALCOUNT RT &dislikeLike
+
+task panelC
+  clear screen
+  mouse show
+  show bitmap selector           -100  40
+  show bitmap selector            100  40
+  show text "Dentol toothpaste fights gum disease"     0 -80
+  show text "False"              -100  40
+  show text "True"                100  40
+  readmouse l 1 10000                                   # l=left mouse button, 1=first stiumli correct, 5000=wait for 5secs
+  set $mouseX MOUSE_X                                   # current mouse x-coordinate
+  set $mouseY MOUSE_Y                                   # current mouse x-coordinate
+  set &falseTrue bitmap-under-mouse $mouseX $mouseY     # 1=Fasle, 2=True
+  set &falseTrue RT
+  save TASKNAME TRIALCOUNT RT &falseTrue
+
+block intro
+  message intro
+  tasklist
+    elabInstr 1
+  end
+
+block panelA 
+  tasklist
+    panelA 1
+  end
+
+block coverBC  
+  tasklist
+    coverPanelB 1
+    coverPanelC 1
+  end
+
+block panelBC
+  tasklist
+    panelB 1
+    panelC 1
+  end
+  feedback
+    text 0 -100 "!! For debugging purposes, remove before using with live subjects !!"
+    text 0 0  &dislikeLike  ; prefix "&dislikeLike:" ; postfix " (Dislike=1, Like=2)"
+    text 0 20  &falseTrue    ; prefix "&falseTrue:"   ; postfix " (False=1, True=2)"
+    text 0 40 &reactTime    ; prefix "&reactTime:"   ; postfix " (ms)"
+    text 0 80 "(press space to continue)"
+  end
