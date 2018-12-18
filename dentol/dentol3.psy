@@ -5,7 +5,7 @@
 # Study of strong vs weak attributes in a high vs low elaboration setting.
 
 options
-  executable dentol2
+  executable dentol3
   set &reactTime   0
   set &dislikeLike 0
   set &falseTrue   0
@@ -22,9 +22,9 @@ fonts
 # -------
 
 table dentolStatements
-  "Dentol toothpaste." "Fights gum disease."                         # row1
-  "Dentol toothpaste." "Kills germs that cause bad breath."          # row2
-  "Dentol toothpaste." "Prevents cavities."                          # row3
+  "Dentol toothpaste fights gum disease."                         # row1
+  "Dentol toothpaste kills germs that cause bad breath."          # row2
+  "Dentol toothpaste prevents cavities."                          # row3
 
 table dentolAdjectives
   "Dentol toothpaste." "Dislike"  "Like"
@@ -32,9 +32,9 @@ table dentolAdjectives
   "Dentol toothpaste." "Good"     "Bad"
 
 table coverStatements
-  "BrandX." "Fights gum disease."
-  "BrandX." "Kills germs that cause bad breath."
-  "BrandY." "Prevents cavities."
+  "BrandX fights gum disease."
+  "BrandX kills germs that cause bad breath."
+  "BrandY prevents cavities."                                    # should have more...
 
 table coverAdjectives
   "BrandX." "Dislike"  "Like"
@@ -68,7 +68,24 @@ task dentolMessage
   show text "Prevents cavities."                 0  80
   delay 5000
 
+task coverStatements
+  table coverStatements
+  clear screen
+  mouse show
+  show bitmap selector           -100  40
+  show bitmap selector            100  40
+  show text @1                      0 -80
+  show text "False"              -100  40
+  show text "True"                100  40
+  readmouse l 1 10000                                   # l=left mouse button, 1=first stiumli correct, 5000=wait for 5secs
+  set $mouseX MOUSE_X                                   # current mouse x-coordinate
+  set $mouseY MOUSE_Y                                   # current mouse x-coordinate
+  set &falseTrue bitmap-under-mouse $mouseX $mouseY     # 1=Fasle, 2=True
+  set &falseTrue RT
+  save TASKNAME TRIALCOUNT RT &falseTrue
+
 task coverAdjectives
+  table coverAdjectives
   clear screen
   mouse show
   show bitmap selector           -100  40
@@ -82,21 +99,6 @@ task coverAdjectives
   set &dislikeLike bitmap-under-mouse $mouseX $mouseY  # 1=Dislike, 2=Like
   set &reactTime RT
   save TASKNAME TRIALCOUNT RT &dislikeLike
-
-task coverStatements
-  clear screen
-  mouse show
-  show bitmap selector           -100  40
-  show bitmap selector            100  40
-  show text "X brand toothpaste prevents cavities"     0 -80
-  show text "False"              -100  40
-  show text "True"                100  40
-  readmouse l 1 10000                                   # l=left mouse button, 1=first stiumli correct, 5000=wait for 5secs
-  set $mouseX MOUSE_X                                   # current mouse x-coordinate
-  set $mouseY MOUSE_Y                                   # current mouse x-coordinate
-  set &falseTrue bitmap-under-mouse $mouseX $mouseY     # 1=Fasle, 2=True
-  set &falseTrue RT
-  save TASKNAME TRIALCOUNT RT &falseTrue
 
 task dentolStatements
   clear screen
