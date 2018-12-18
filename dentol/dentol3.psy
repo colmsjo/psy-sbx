@@ -3,12 +3,18 @@
 # 181216, Jonas Colmsjö
 #
 # Study of strong vs weak attributes in a high vs low elaboration setting.
+#
+# The data file has the following columns
+# &elabScenario TASKNAME TABLEROW TRIALCOUNT RT &falseTrue   - for adjective
+# &elabScenario TASKNAME TABLEROW TRIALCOUNT RT &dislikeLike - for statements
+
 
 options
   executable dentol3
-  set &reactTime   0
-  set &dislikeLike 0
-  set &falseTrue   0
+  set &reactTime    0
+  set &dislikeLike  0
+  set &falseTrue    0
+  set &elabScenario 0
 
 bitmaps
   intro
@@ -20,6 +26,10 @@ fonts
 #
 # tables
 # -------
+
+table elabInstr
+  "This is a high elaboration scenario."                          # set &elabScenario to 1
+  "This is a low elaboration scenario."                           # set &elabScenario to 2
 
 table dentolStatements
   "Dentol toothpaste fights gum disease."                         # row1
@@ -34,7 +44,7 @@ table dentolAdjectives
 table coverStatements
   "BrandX fights gum disease."
   "BrandX kills germs that cause bad breath."
-  "BrandY prevents cavities."                                    # should have more...
+  "BrandY prevents cavities."                             # should have more...
 
 table coverAdjectives
   "BrandX." "Dislike"  "Like"
@@ -46,8 +56,10 @@ table coverAdjectives
 # -------
 
 task elabInstr
+  table elabInstr
   font arial
-  show text "Describe high vs low elaboration."  0   0
+  show text @1  0   0
+  set &elabScenario TABLEROW                              # 1=high, 2=low
   delay 5000
 
 task coverInstr
@@ -64,7 +76,6 @@ task thankYouMessage
   font arial
   show text "Thanks for participating in out study!"  0   0
   delay 5000
-
 
 task dentolMessage
   font arial
@@ -88,7 +99,7 @@ task coverStatements
   set $mouseY MOUSE_Y                                   # current mouse x-coordinate
   set &falseTrue bitmap-under-mouse $mouseX $mouseY     # 1=Fasle, 2=True
   set &falseTrue RT
-  save TASKNAME TABLEROW TRIALCOUNT RT &falseTrue
+  save &elabScenario TASKNAME TABLEROW TRIALCOUNT RT &falseTrue
 
 task coverAdjectives
   table coverAdjectives
@@ -104,7 +115,7 @@ task coverAdjectives
   set $mouseY MOUSE_Y
   set &dislikeLike bitmap-under-mouse $mouseX $mouseY
   set &reactTime RT
-  save TASKNAME TABLEROW TRIALCOUNT RT &dislikeLike
+  save &elabScenario TASKNAME TABLEROW TRIALCOUNT RT &dislikeLike
 
 task dentolStatements
   table dentolStatements
@@ -115,12 +126,12 @@ task dentolStatements
   show text @1                      0 -80
   show text "False"              -100  40
   show text "True"                100  40
-  readmouse l 1 10000					                          # l=left mouse button, 1=first stiumli correct, 10000=wait for 10secs
-  set $mouseX MOUSE_X                                   # current mouse x-coordinate
-  set $mouseY MOUSE_Y                                   # current mouse x-coordinate
-  set &dislikeLike bitmap-under-mouse $mouseX $mouseY   # 1=Dislike, 2=Like
+  readmouse l 1 10000
+  set $mouseX MOUSE_X
+  set $mouseY MOUSE_Y
+  set &dislikeLike bitmap-under-mouse $mouseX $mouseY
   set &reactTime RT
-  save TASKNAME TABLEROW TRIALCOUNT RT &dislikeLike
+  save &elabScenario TASKNAME TABLEROW TRIALCOUNT RT &dislikeLike
 
 task dentolAdjectives
   table dentolAdjectives
@@ -131,12 +142,12 @@ task dentolAdjectives
   show text @1                      0 -80
   show text @2                   -100  40
   show text @3                    100  40
-  readmouse l 1 10000                                   # l=left mouse button, 1=first stiumli correct, 5000=wait for 5secs
-  set $mouseX MOUSE_X                                   # current mouse x-coordinate
-  set $mouseY MOUSE_Y                                   # current mouse x-coordinate
-  set &falseTrue bitmap-under-mouse $mouseX $mouseY     # 1=Fasle, 2=True
+  readmouse l 1 10000
+  set $mouseX MOUSE_X
+  set $mouseY MOUSE_Y
+  set &falseTrue bitmap-under-mouse $mouseX $mouseY
   set &falseTrue RT
-  save TASKNAME TABLEROW TRIALCOUNT RT &falseTrue
+  save &elabScenario TASKNAME TABLEROW TRIALCOUNT RT &falseTrue
 
 #
 # blocks
@@ -160,8 +171,8 @@ block coverInstr
 
 block coverStatementsAdjectives
   tasklist
-    coverStatements 1
-    coverAdjectives 1
+    coverStatements 3 no_repeat
+    coverAdjectives 3 no_repeat
   end
 
 block dentolInstr
@@ -171,13 +182,13 @@ block dentolInstr
 
 block dentolStatementsAdjectives
   tasklist
-    dentolStatements 1
-    dentolAdjectives 1
+    dentolStatements 3 no_repeat
+    dentolAdjectives 3 no_repeat
   end
   feedback
     text 0 -100 "!! For debugging purposes, remove before using with live subjects !!"
     text 0 0  &dislikeLike  ; prefix "&dislikeLike:" ; postfix " (Dislike=1, Like=2)"
-    text 0 20  &falseTrue    ; prefix "&falseTrue:"   ; postfix " (False=1, True=2)"
+    text 0 20 &falseTrue    ; prefix "&falseTrue:"   ; postfix " (False=1, True=2)"
     text 0 40 &reactTime    ; prefix "&reactTime:"   ; postfix " (ms)"
     text 0 80 "(press space to continue)"
   end
