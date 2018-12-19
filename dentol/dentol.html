@@ -1,0 +1,41 @@
+<!DOCTYPE HTML>
+<html><head><META CHARSET='UTF-8'><title>PsyToolkit run experiment</title>
+</head>
+<body onload="whenloaded()">
+<script>
+function tmpmouse(e){MouseX=e.clientX-c.getBoundingClientRect().left;MouseY=e.clientY-c.getBoundingClientRect().top; if(MouseX>175 && MouseX<625 && MouseY>125 && MouseY<475){window.removeEventListener('mousedown', tmpmouse, false);main();}}
+
+function whenloaded(){
+tmp1 = document.getElementById('exp');
+ tmp2 = tmp1.getContext('2d');
+ tmp2.fillStyle='red';
+ tmp2.fillRect(175,125,450,350);
+ tmp2.fillStyle='yellow';
+ tmp2.font='24px Arial';
+ tmp2.textAlign='center';
+ tmp2.fillText('Click to start',400,300);
+ window.addEventListener('mousedown', tmpmouse, false) // use this listener only when needed
+}</script>
+<center><div id='cbox'
+    style='width:800;height:600;border:0px
+    solid black;background-color:black'><canvas tabindex='1'
+    id="exp" width="800"
+    height="600" style="outline:none;display:
+    block;
+    background-color:black;border:none;padding:0;margin:0;"></canvas></div></center>
+<script>
+ var click_to_start_text = Click to start;
+
+ tmp1 = document.getElementById('exp');
+ tmp2 = tmp1.getContext('2d');
+ tmp2.fillStyle='grey';
+ tmp2.fillRect(175,125,450,350);
+ tmp2.fillStyle='blue';
+ tmp2.font='24px Arial';
+ tmp2.textAlign='center';
+ tmp2.fillText('Wait a second ...',400,300);
+</script>
+<script src="dentol.js"></script>
+
+</body>
+</html>
