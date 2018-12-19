@@ -1,0 +1,19 @@
+option: survey-name: Childhood memory
+
+l: gender
+t: radio
+q: What is your gender?
+- Female
+- Male
+
+l: age
+t: range
+q: What is your age?
+- {min=60,max=120} Select your age
+
+l: earliest
+t: textbox
+q: Please write down your <b>earliest 3 memories of personal event</b>. For each even, say how old you were (1 year, 2 years, 3 years, 4 years, 5 years, etc).
+- event1
+- event2
+- event3

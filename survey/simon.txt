@@ -1,0 +1,78 @@
+option: survey-name: Psychological Studies cognitive demonstration
+
+scale: agree
+- Disagree strongly
+- Disagree moderately
+#- Disagree a little
+#- Neither agree nor disagree
+#- Agree a little
+#- Agree moderately
+#- Agree strongly
+
+l: firsttime
+t: radio
+q: Is this the first time that you do this specific study?
+- Yes, first try
+- No. I already tried and finished it before and wanted to try it again
+- No. I tried it before, but it did technically not work, and therefore try again
+
+l: where
+t: radio
+q: Where are you right now?
+- Alone in a room, and it is quiet
+- Alone in a room, but it is not quiet at all (for example because of listening to music/tv)
+- Outside university, in a room with other people, but it is pretty quiet
+- Outside university, in a room with other people, and it is not quiet
+- In a university room or library
+- Somewhere else
+
+l: gender
+q: Are you male or female?
+t: radio
+- Male
+- Female
+- Do not want to answer
+
+l: student
+q: Are you a psychology student?
+t: radio
+- Yes
+- No
+
+l: computer
+q: Do you regularly play computer games?
+t: radio
+- Yes, at least once a week
+- No, less than once a week or never
+
+l: tired
+q: How fit do you feel?
+t: radio
+- Very awake and fit
+- Neither fit nor tired
+- I feel a bit tired
+- I feel very tired
+
+l: tipi
+q: I see myself as ...
+t: scale agree
+- I see myself as Extraverted, enthusiastic
+#- I see myself as Critical, quarrelsome
+#- I see myself as Dependable, self-disciplined
+#- I see myself as Anxious, easily upset
+#- I see myself as Open to new experiences, complex
+#- I see myself as Reserved, quiet
+#- I see myself as Sympathetic, warm
+#- I see myself as Disorganized, careless
+#- I see myself as Calm, emotionally stable
+#- I see myself as Conventional, uncreative
+
+#l: simontask
+#q: Please carry out the experiment now, it takes around 10 minutes
+#t: experiment
+#- classroom_simon
+
+#l: comments
+#t: textbox
+#q: Do you have any comments?
+#- Type comments in the box below:

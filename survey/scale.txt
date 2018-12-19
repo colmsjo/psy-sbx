@@ -1,0 +1,14 @@
+option: survey-name: Scales
+
+scale: agree
+- Disagree
+- Neither agree nor disagree
+- Agree
+
+l: my_question
+q: How much do you agree with each of the following
+t: scale agree
+- I see myself as Extraverted, enthusiastic
+- I see myself as Critical, quarrelsome
+- I see myself as Dependable, self-disciplined
+- I see myself as Anxious, easily upset

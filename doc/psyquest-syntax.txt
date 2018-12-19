@@ -1,0 +1,54 @@
+Syntax of PsyQuest questionnaire manager:
+option
+bitmaps
+l(abel): <compulsory first line of item >
+j(ump): <question label>                 
+q(uestion): <the actual question>        
+ti(topimage): show this bitmap           
+timeout: <maximal time to answer (s)>    
+o: <question options>                    
+o: partial (for scale questions)         
+e(xecute): <some unix command line>      
+i(f): <answer option and jump
+-          radio button answer           
+*          checkbox answer               
+s          <scale length><'left'><'right'>('description')
+e          text entry
+
+------------------------------------------------------
+There are options to change text on buttons
+Option examples:
+option back
+option label next Next question please
+option label start Click here to start the questions
+
+Simple example:
+-------------------------------------------------------
+option label next Press this button for next question
+
+l: food
+q: Which of the following foods do you prefer?
+- Vegetables
+- Bread
+
+l: games
+q: Which of the following games have you played last week?
+* Chess
+* Checkers
+* Any card game
+* None of the above
+
+l: name
+q: What is your name?
+e Type your first name
+e Type your last name
+
+l: cake
+q: How much do you like cake?
+s 5 "not at all" "very much"
+
+l: cake
+q: What features do you like about cake?
+s 5 "not at all" "very much" "Sweetness"
+s 5 "not at all" "very much" "Softness"
+s 5 "not at all" "very much" "Smell"
