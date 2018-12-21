@@ -1,0 +1,210 @@
+# dentol2.psy
+#
+# 181216, Jonas Colmsjö
+#
+# Study of strong vs weak attributes in a high vs low elaboration setting.
+#
+# The data file has the following columns
+# &elabScenario TASKNAME TABLEROW TRIALCOUNT RT &falseTrue   - for adjective
+# &elabScenario TASKNAME TABLEROW TRIALCOUNT RT &dislikeLike - for statements
+
+
+options
+  executable dentol2
+  set &reactTime    0
+  set &dislikeLike  0
+  set &falseTrue    0
+  set &elabScenario 0
+
+bitmaps
+  intro
+  selector
+
+fonts
+  arial 18
+
+#
+# tables
+# -------
+
+table elabInstr
+  "This is a high elaboration scenario."                          # set &elabScenario to 1
+  "This is a low elaboration scenario."                           # set &elabScenario to 2
+
+table dentolStatements
+  "Dentol toothpaste fights gum disease."                         # row1
+  "Dentol toothpaste kills germs that cause bad breath."          # row2
+  "Dentol toothpaste prevents cavities."                          # row3
+
+table dentolAdjectives
+  "Dentol toothpaste." "Dislike"  "Like"
+  "Dentol toothpaste." "Positive" "Negative"
+  "Dentol toothpaste." "Good"     "Bad"
+
+table coverStatements
+  "BrandX fights gum disease."
+  "BrandX kills germs that cause bad breath."
+  "BrandY prevents cavities."                             # should have more...
+
+table coverAdjectives
+  "BrandX." "Dislike"  "Like"
+  "BrandX." "Positive" "Negative"
+  "BrandY." "Good"     "Bad"
+
+#
+# tasks
+# -------
+
+task elabInstr
+  table elabInstr
+  font arial
+  show text @1  0   0
+  set &elabScenario TABLEROW                              # 1=high, 2=low
+  delay 5000
+
+task coverInstr
+  font arial
+  show text "Describe that misc brands will be tested."  0   0
+  delay 5000
+
+task dentolInstr
+  font arial
+  show text "Describe that our brand will be tested."  0   0
+  delay 5000
+
+task thankYouMessage
+  font arial
+  show text "Thanks for participating in our study!"  0   0
+  delay 5000
+
+task dentolMessage
+  font arial
+  show text "Dentol toothpaste."                 0 -80
+  show text "Fights gum disease."                0   0
+  show text "Kills germs that cause bad breath." 0  40
+  show text "Prevents cavities."                 0  80
+  delay 5000
+
+task coverStatements
+  table coverStatements
+  clear screen
+  mouse show
+  show bitmap selector           -100  40
+  show bitmap selector            100  40
+  show text @1                      0 -80
+  show text "False"              -100  40
+  show text "True"                100  40
+  readmouse l 1 10000                                   # l=left mouse button, 1=first stiumli correct, 5000=wait for 5secs
+  set $mouseX MOUSE_X                                   # current mouse x-coordinate
+  set $mouseY MOUSE_Y                                   # current mouse x-coordinate
+  set &falseTrue bitmap-under-mouse $mouseX $mouseY     # 1=Fasle, 2=True
+  set &falseTrue RT
+  save &elabScenario TASKNAME TABLEROW TRIALCOUNT RT &falseTrue
+
+task coverAdjectives
+  table coverAdjectives
+  clear screen
+  mouse show
+  show bitmap selector           -100  40
+  show bitmap selector            100  40
+  show text @1                      0 -80
+  show text @2                   -100  40
+  show text @3                    100  40
+  readmouse l 1 10000
+  set $mouseX MOUSE_X
+  set $mouseY MOUSE_Y
+  set &dislikeLike bitmap-under-mouse $mouseX $mouseY
+  set &reactTime RT
+  save &elabScenario TASKNAME TABLEROW TRIALCOUNT RT &dislikeLike
+
+task dentolStatements
+  table dentolStatements
+  clear screen
+  mouse show
+  show bitmap selector           -100  40
+  show bitmap selector            100  40
+  show text @1                      0 -80
+  show text "False"              -100  40
+  show text "True"                100  40
+  readmouse l 1 10000
+  set $mouseX MOUSE_X
+  set $mouseY MOUSE_Y
+  set &dislikeLike bitmap-under-mouse $mouseX $mouseY
+  set &reactTime RT
+  save &elabScenario TASKNAME TABLEROW TRIALCOUNT RT &dislikeLike
+
+task dentolAdjectives
+  table dentolAdjectives
+  clear screen
+  mouse show
+  show bitmap selector           -100  40
+  show bitmap selector            100  40
+  show text @1                      0 -80
+  show text @2                   -100  40
+  show text @3                    100  40
+  readmouse l 1 10000
+  set $mouseX MOUSE_X
+  set $mouseY MOUSE_Y
+  set &falseTrue bitmap-under-mouse $mouseX $mouseY
+  set &falseTrue RT
+  save &elabScenario TASKNAME TABLEROW TRIALCOUNT RT &falseTrue
+
+#
+# blocks
+# -------
+
+block intro
+  message intro
+  tasklist
+    elabInstr 1
+  end
+
+block dentolMessag
+  tasklist
+    dentolMessage 1
+  end
+
+block coverInstr
+  tasklist
+    coverInstr 1
+  end
+
+block coverStatementsAdjectives
+  tasklist
+    coverStatements 3 no_repeat
+    coverAdjectives 3 no_repeat
+  end
+
+block dentolInstr
+  tasklist
+    dentolInstr 1
+  end
+
+block dentolStatements
+  tasklist
+    dentolStatements 3 no_repeat
+  end
+  feedback
+    text 0 -100 "!! For debugging purposes, remove before using with live subjects !!"
+    text 0 0  &dislikeLike  ; prefix "&dislikeLike:" ; postfix " (Dislike=1, Like=2)"
+    text 0 20 &falseTrue    ; prefix "&falseTrue:"   ; postfix " (False=1, True=2)"
+    text 0 40 &reactTime    ; prefix "&reactTime:"   ; postfix " (ms)"
+    text 0 80 "(press space to continue)"
+  end
+
+block dentolAdjectives
+  tasklist
+    dentolAdjectives 3 no_repeat
+  end
+  feedback
+    text 0 -100 "!! For debugging purposes, remove before using with live subjects !!"
+    text 0 0  &dislikeLike  ; prefix "&dislikeLike:" ; postfix " (Dislike=1, Like=2)"
+    text 0 20 &falseTrue    ; prefix "&falseTrue:"   ; postfix " (False=1, True=2)"
+    text 0 40 &reactTime    ; prefix "&reactTime:"   ; postfix " (ms)"
+    text 0 80 "(press space to continue)"
+  end
+
+block thankYouMessage
+  tasklist
+    thankYouMessage 1
+  end
