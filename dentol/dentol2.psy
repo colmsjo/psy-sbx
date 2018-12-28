@@ -98,7 +98,7 @@ task coverStatements
   set $mouseX MOUSE_X                                   # current mouse x-coordinate
   set $mouseY MOUSE_Y                                   # current mouse x-coordinate
   set &falseTrue bitmap-under-mouse $mouseX $mouseY     # 1=Fasle, 2=True
-  set &falseTrue RT
+  set &reactTime RT
   save &elabScenario TASKNAME TABLEROW TRIALCOUNT RT &falseTrue
 
 task coverAdjectives
