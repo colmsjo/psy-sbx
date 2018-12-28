@@ -146,7 +146,7 @@ task dentolAdjectives
   set $mouseX MOUSE_X
   set $mouseY MOUSE_Y
   set &falseTrue bitmap-under-mouse $mouseX $mouseY
-  set &falseTrue RT
+  set &reactTime RT
   save &elabScenario TASKNAME TABLEROW TRIALCOUNT RT &falseTrue
 
 #
