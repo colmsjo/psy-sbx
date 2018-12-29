@@ -17,6 +17,12 @@ from os import listdir
 from math import sqrt
 from os.path import isfile, join
 from scipy import stats
+from statsmodels.stats.power import TTestIndPower
+
+# calculate power curves for varying sample and effect size
+from numpy import array
+from matplotlib import pyplot
+from statsmodels.stats.power import TTestIndPower
 
 
 # Constants & config
@@ -24,12 +30,18 @@ from scipy import stats
 
 pd.options.display.float_format = '{:,.2f}'.format
 
-ALFAS = [0.05, 0.10, 0.20, 0.30, 0.35, 0.40]
+ALPHAS = [0.05, 0.10, 0.20, 0.30, 0.35, 0.40]
 SKEWED = False
 SEPARATOR = ' '
 OUTLIER_LIMIT = 10000
 PATH_DATA_FILES = './data'
+PATH_OUTPUT = './out'
 
+DEBUG = True
+
+def debug(*argv):
+    if DEBUG:
+        print('DEBUG:', *argv)
 
 # Read the data files
 # -------------------
@@ -43,6 +55,7 @@ def read_data():
     # Read the files into pandas data frames
     i = 0
     for file in files:
+        debug('Reading file:', PATH_DATA_FILES + '/' + file)
         df = pd.read_csv(PATH_DATA_FILES + '/' + file, SEPARATOR,
                          names = ['elabScenario','TASKNAME','TABLEROW','TRIALCOUNT','RT','negPos'])
         df['datetime'] = trials[i][0]
@@ -87,9 +100,10 @@ def calc_stats(rows3, print_stats=False):
     df = NumH+NumL-2
     SP = sqrt(((NumH-1)*SH2 +(NumL-1)*SL2) / (NumH+NumL-2))
     SD = SP*sqrt(1/NumH + 1/NumL)
-    confint_ = list(map(lambda x: stats.t.ppf(1-x/2, df)*SP, ALFAS))
+    confint_ = list(map(lambda x: stats.t.ppf(1-x/2, df)*SP, ALPHAS))
     confint = list(map(lambda x: (MD - x, MD + x), confint_))
-    t_values = list(map(lambda x: stats.t.ppf(1-x/2, df), ALFAS))
+    t_values = list(map(lambda x: stats.t.ppf(1-x/2, df), ALPHAS))
+    cohen_d = MD/SP
 
     if print_stats:
         print('\n----- STATS ----- (high=1 and low=2 elaboration)', )
@@ -98,11 +112,26 @@ def calc_stats(rows3, print_stats=False):
         print('Confidence intervals for myH-myL is MD+-t_df(alfa05/2)*SP:\n', ["(%0.2f, %0.2f)" % (x,y) for (x,y) in confint])
         print('Calculated t-test statistic: {:,.6f}'.format(MD/SD))
         print('t-values for alfa/2:', ["%0.2f" % i for i in t_values] )
-        print('alfas used:', ALFAS)
+        print('ALPHAS used:', ALPHAS)
         print('t-test from stats package (assumning same variance):', stats.ttest_ind(rows3High['RT'], rows3Low['RT'], equal_var=True))
         print('t-test from stats package (assuming different variances):', stats.ttest_ind(rows3High['RT'], rows3Low['RT'], equal_var=False))
+        print("Cohen's d: {:,.3f}".format(cohen_d))
 
-    return sdata
+    return sdata, cohen_d
+
+
+def power_analysis(alphas, effect, power):
+    result = []
+    analysis = TTestIndPower()
+    for alpha in alphas:
+        result.append(analysis.solve_power(effect, power=power, nobs1=None, ratio=1.0, alpha=alpha))
+    print('effect: {:,.3f}, power: {:,.2f} => necessary sample sizes for the different alphas:'.format(effect, power),
+          ["%0.1f" % i for i in result])
+
+    sample_sizes = array(range(5, 100))
+    analysis.plot_power(dep_var='nobs', nobs=sample_sizes, effect_size=[effect])
+    pyplot.savefig(PATH_OUTPUT+'/power_analysis.png')
+    pyplot.show()
 
 
 # Show the results
@@ -113,16 +142,21 @@ def calc_stats(rows3, print_stats=False):
 def plots(rows):
     stats.probplot(rows[rows['elabScenario'] == 2]['RT'], dist="norm", plot=pylab)
     pylab.title('elabScenario=2')
+    pylab.savefig(PATH_OUTPUT+'/probplot_elabScenario_2.png')
     pylab.show()
-    pylab.savefig('elabScenario_2.png')
+
     stats.probplot(rows[rows['elabScenario'] == 1]['RT'], dist="norm", plot=pylab)
     pylab.title('elabScenario=1')
+    pylab.savefig(PATH_OUTPUT+'/probplot_elabScenario_1.png')
     pylab.show()
 
     boxplot = rows.boxplot(column=['RT'], by='elabScenario')
     boxplot.plot()
+    plt.savefig(PATH_OUTPUT+'/boxplt.png')
     plt.show()
+
     rows.hist(column=['RT'], bins=10, by='elabScenario')
+    plt.savefig(PATH_OUTPUT+'/hist.png')
     plt.show()
 
 
@@ -135,5 +169,6 @@ if SKEWED:
     rows['RT'] = rows['RT'].apply(np.sqrt)  # np.sqrt, np.log, lambda x: 1/x etc.
 
 print('\n----- DATA -----\n', rows)
-sdata = calc_stats(rows, True)
+sdata, cohen_d = calc_stats(rows, True)
 plots(rows)
+power_analysis(ALPHAS, cohen_d, 0.8)
