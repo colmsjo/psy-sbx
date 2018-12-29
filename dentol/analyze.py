@@ -114,6 +114,7 @@ def plots(rows):
     stats.probplot(rows[rows['elabScenario'] == 2]['RT'], dist="norm", plot=pylab)
     pylab.title('elabScenario=2')
     pylab.show()
+    pylab.savefig('elabScenario_2.png')
     stats.probplot(rows[rows['elabScenario'] == 1]['RT'], dist="norm", plot=pylab)
     pylab.title('elabScenario=1')
     pylab.show()
