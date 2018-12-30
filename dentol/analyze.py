@@ -124,6 +124,9 @@ def calc_stats(rows3, print_stats=False):
         print('One-sided t-test from stats package (assumning different variances) - t-statistic: {:,.3f}, p-value:{:,.3f}'.format(t_stat, p_value/2) )
         print("Cohen's d: {:,.3f}".format(cohen_d))
 
+        print('Two-sided Non-parametric Mann-Whitney test (not assuming normality):', stats.mannwhitneyu(rows3Low['RT'], rows3High['RT'], alternative='two-sided'))
+        print('One-sided Non-parametric Mann-Whitney test (not assuming normality):', stats.mannwhitneyu(rows3Low['RT'], rows3High['RT'], alternative='greater'))
+
     return sdata, cohen_d
 
 
