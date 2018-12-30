@@ -103,6 +103,7 @@ def calc_stats(rows3, print_stats=False):
     confint_ = list(map(lambda x: stats.t.ppf(1-x/2, df)*SP, ALPHAS))
     confint = list(map(lambda x: (MD - x, MD + x), confint_))
     t_values = list(map(lambda x: stats.t.ppf(1-x/2, df), ALPHAS))
+    t_values_one_sided = list(map(lambda x: stats.t.ppf(1-x, df), ALPHAS))
     cohen_d = MD/SP
 
     if print_stats:
@@ -111,21 +112,33 @@ def calc_stats(rows3, print_stats=False):
         print('Standard errors - SH:{:,.2f}, SL:{:,.2f}, SP:{:,.2f}'.format(sqrt(SH2), sqrt(SL2), SP))
         print('Confidence intervals for myH-myL is MD+-t_df(alfa05/2)*SP:\n', ["(%0.2f, %0.2f)" % (x,y) for (x,y) in confint])
         print('Calculated t-test statistic: {:,.6f}'.format(MD/SD))
-        print('t-values for alfa/2:', ["%0.2f" % i for i in t_values] )
+        print('Necessary t-values for alfa/2 (two-sided):', ["%0.2f" % i for i in t_values] )
+        print('Necessary t-values for alfa (one-sided):', ["%0.2f" % i for i in t_values_one_sided] )
         print('ALPHAS used:', ALPHAS)
-        print('t-test from stats package (assumning same variance):', stats.ttest_ind(rows3High['RT'], rows3Low['RT'], equal_var=True))
-        print('t-test from stats package (assuming different variances):', stats.ttest_ind(rows3High['RT'], rows3Low['RT'], equal_var=False))
+        print('Two-sided t-test from stats package (assumning same variance):', stats.ttest_ind(rows3Low['RT'], rows3High['RT'], equal_var=True))
+        print('Two-sided t-test from stats package (assuming different variances):', stats.ttest_ind(rows3Low['RT'], rows3High['RT'], equal_var=False))
+
+        t_stat, p_value = stats.ttest_ind(rows3Low['RT'], rows3High['RT'], equal_var=True)
+        print('One-sided t-test from stats package (assumning same variance) - t-statistic: {:,.3f}, p-value:{:,.3f}'.format(t_stat, p_value/2) )
+        t_stat, p_value = stats.ttest_ind(rows3Low['RT'], rows3High['RT'], equal_var=False)
+        print('One-sided t-test from stats package (assumning different variances) - t-statistic: {:,.3f}, p-value:{:,.3f}'.format(t_stat, p_value/2) )
         print("Cohen's d: {:,.3f}".format(cohen_d))
 
     return sdata, cohen_d
 
 
 def power_analysis(alphas, effect, power):
-    result = []
     analysis = TTestIndPower()
+    result = []
     for alpha in alphas:
         result.append(analysis.solve_power(effect, power=power, nobs1=None, ratio=1.0, alpha=alpha))
-    print('effect: {:,.3f}, power: {:,.2f} => necessary sample sizes for the different alphas:'.format(effect, power),
+    print('Two-sided: effect: {:,.3f}, power: {:,.2f} => necessary sample sizes for the different alphas:'.format(effect, power),
+          ["%0.1f" % i for i in result])
+
+    result = []
+    for alpha in alphas:
+        result.append(analysis.solve_power(effect, power=power, nobs1=None, ratio=1.0, alpha=alpha, alternative='larger'))
+    print('One-sided: effect: {:,.3f}, power: {:,.2f} => necessary sample sizes for the different alphas:'.format(effect, power),
           ["%0.1f" % i for i in result])
 
     sample_sizes = array(range(5, 100))
