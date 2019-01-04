@@ -61,11 +61,11 @@ table coverAdjectives
 
 task showIntro
   font arial
-  show text "Vi undersöker hur attityder skapas till nya varumärken i förhållande till existerande."   0 -80
-  show text "Varje del av studien kommer ha instruktioner. Vänligen läs"                0   0
-  show text "instruktionerna noga och gör ditt bästa för att följa dem. " 0  40
-  show text "studien att ta ca. 5 min."                 0  80
-  show text "Tack för din medverkan!"                 0  80
+  show text "We are investigating how attitudes towards new brands are created in relationship towards existing."   0 -80
+  show text "Each part of the study will have instructions. Please read"                0   0
+  show text "the instructions carefully and try to follow them as carefully as you can. " 0  40
+  show text "The study will take approx. 5 minutes."                 0  80
+  show text "Thank you for your participation!"                 0  120
   show text "(Click to continue)"       0 200
   # show bitmap intro
   readmouse l 1 60000
@@ -119,8 +119,8 @@ task coverStatements
   show bitmap selector           -100  40
   show bitmap selector            100  40
   show text @1                      0 -80
-  show text "Falskt"             -100  40
-  show text "Sant"                100  40
+  show text "False"             -100  40
+  show text "True"                100  40
   readmouse l 1 10000                                   # l=left mouse button, 1=first stiumli correct, 5000=wait for 5secs
   set $mouseX MOUSE_X                                   # current mouse x-coordinate
   set $mouseY MOUSE_Y                                   # current mouse x-coordinate
