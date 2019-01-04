@@ -21,7 +21,6 @@ options
   set &elabScenario 0
 
 bitmaps
-  intro
   selector
 
 fonts
@@ -67,7 +66,6 @@ task showIntro
   show text "The study will take approx. 5 minutes."                                                  0 -40
   show text "Thank you for your participation!"                                                       0  40
   show text "(Click to continue)"                                                                     0  80
-  # show bitmap intro
   readmouse l 1 60000
 
 task elabInstr
@@ -76,15 +74,15 @@ task elabInstr
   show text "(Click to continue)"                                   0 200
   set &elabScenario TABLEROW                              # 1=low, 2=high
   if &elabScenario == 1
-    show text "Read the statement on next page."                    0 -120
+    show text "Read the statements on next page."                    0 -120
     show text "Count the vowels on each row."                       0 -80
     show text "Multiply the number with the number of the row."     0 -40
     show text "Add the numbers. Do not write anything down."        0  0
   fi
   if &elabScenario == 2
-  show text "Read the statement on next page"                       0 -80
-    show text "Pay attention to the thougt you have for the texts"  0 -40
-    show text "Take as long as you need"                            0  0
+    show text "Read the statement on next page."                     0 -80
+    show text "Pay attention to the thougt you have for the texts."  0 -40
+    show text "Take as much time as you need."                       0  0
   fi
   readmouse l 1 60000
 
@@ -149,8 +147,8 @@ task dentolStatements
   show bitmap selector           -100  40
   show bitmap selector            100  40
   show text @1                      0 -80
-  show text "Falskt"             -100  40
-  show text "Sant"                100  40
+  show text "False"             -100  40
+  show text "True"                100  40
   readmouse l 1 10000
   set $mouseX MOUSE_X
   set $mouseY MOUSE_Y
