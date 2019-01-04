@@ -205,18 +205,17 @@ block dentolInstr
     dentolInstr 1
   end
 
-# Attribute judgements
-block dentolStatements
-  tasklist
-    dentolStatements 3 fixed
-  end
-
 # Evalualtive judgement
 block dentolAdjectives
   tasklist
     dentolAdjectives 3 fixed
   end
 
+# Attribute judgements
+block dentolStatements
+  tasklist
+    dentolStatements 3 fixed
+  end
 
 block thankYouMessage
   tasklist
