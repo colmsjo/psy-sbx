@@ -60,12 +60,12 @@ table coverAdjectives
 
 task showIntro
   font arial
-  show text "We are investigating how attitudes towards new brands are created in"                    0 -160
-  show text "relatioship towards existing brands. Each part of the study will have instructions."     0 -120
-  show text "Please read the instructions and to follow them as carefully as you can."                0 -80
-  show text "The study will take approx. 5 minutes."                                                  0 -40
-  show text "Thank you for your participation!"                                                       0  40
-  show text "(Click to continue)"                                                                     0  80
+  show text "We are investigating how attitudes towards new brands are created in"      0 -160
+  show text "relatioship towards existing brands. Each part of the study will have"     0 -120
+  show text "instructions. Please read the instructions and to follow them as "         0 -80
+  show text "carefully as you can. The study will take approx. 5 minutes."              0 -40
+  show text "Thank you for your participation!"                                         0  40
+  show text "(Click to continue)"                                                       0  80
   readmouse l 1 60000
 
 task elabInstr
