@@ -7,7 +7,10 @@
 # The data file has the following columns
 # &elabScenario TASKNAME TABLEROW TRIALCOUNT RT &falseTrue   - for adjective
 # &elabScenario TASKNAME TABLEROW TRIALCOUNT RT &dislikeLike - for statements
-
+#
+# Statements are used to test Attribute judgements
+# Adjectives are used to test Evaluative judgements
+#
 
 options
   executable dentol
@@ -202,15 +205,18 @@ block dentolInstr
     dentolInstr 1
   end
 
+# Attribute judgements
 block dentolStatements
   tasklist
     dentolStatements 3 fixed
   end
 
+# Evalualtive judgement
 block dentolAdjectives
   tasklist
     dentolAdjectives 3 fixed
   end
+
 
 block thankYouMessage
   tasklist
