@@ -80,7 +80,7 @@ task elabInstr
     show text "Add the numbers. Do not write anything down."        0  0
   fi
   if &elabScenario == 2
-    show text "Read the statement on next page."                     0 -80
+    show text "Read the statements on next page."                     0 -80
     show text "Pay attention to the thougt you have for the texts."  0 -40
     show text "Take as much time as you need."                       0  0
   fi
