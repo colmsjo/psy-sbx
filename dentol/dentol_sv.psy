@@ -20,7 +20,6 @@ options
   set &elabScenario 0
 
 bitmaps
-  intro
   selector
 
 fonts
