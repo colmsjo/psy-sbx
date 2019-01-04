@@ -56,7 +56,11 @@ table coverAdjectives
 # -------
 
 task showIntro
-  show bitmap intro
+  show text "Vi undersöker hur attityder skapas till nya varumärken i förhållande till existerande."   0 -80
+  show text "Varje del av studien kommer ha instruktioner. Vänligen läs"                0   0
+  show text "instruktionerna noga och gör ditt bästa för att följa dem. " 0  40
+  show text "studien att ta ca. 5 min."                 0  80
+  show text "Tack för din medverkan!"                 0  120
   readmouse l 1 60000
 
 task elabInstr
