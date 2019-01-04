@@ -64,7 +64,7 @@ task showIntro
   show text "Studien kommer att ta ca. 5 min."                                                         0 -40
   show text "Tack för din medverkan!"                                                                  0  40
   show text "(Klicka för att fortsätta)"                                                               0  80
-  readmouse l 1 60000
+  readmouse l 1 120000
 
 task elabInstr
   table elabInstr

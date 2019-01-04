@@ -108,7 +108,7 @@ task dentolMessage
   show text "Kills germs that cause bad breath." 0  40
   show text "Prevents cavities."                 0  80
   show text "(Click to continue)"       0 200
-  readmouse l 1 60000
+  readmouse l 1 120000
 
 task coverStatements
   table coverStatements
