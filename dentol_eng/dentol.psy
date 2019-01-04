@@ -28,28 +28,28 @@ fonts
 # -------
 
 table elabInstr
-  "Grupp 1."  # set &elabScenario to 1
-  "Grupp 2." # set &elabScenario to 2
+  "Grupp 1."                                # set &elabScenario to 1
+  "Grupp 2."                                # set &elabScenario to 2
 
 table dentolStatements
-  "Dentol tandkräm bekämpar tandköttsfinflammation."              # row1
-  "Dentol tandkräm ger en bättre andedräkt."                      # row2
-  "Dentol tandkräm förebygger karies."                            # row3
+  "Dentol toothpaste fights gum disease."                         # row1
+  "Dentol toothpaste kills germs that cause bad breath."          # row2
+  "Dentol toothpaste prevents cavities."                          # row3
 
 table dentolAdjectives
-  "Dentol tandkräm." "Gillar inte"  "Gillar"
-  "Dentol tandkräm." "Negativ" "Positiv"
-  "Dentol tandkräm." "Dålig"     "Bra"
+  "Dentol toothpaste." "Dislike"  "Like"
+  "Dentol toothpaste." "Positive" "Negative"
+  "Dentol toothpaste." "Good"     "Bad"
 
 table coverStatements
-  "Pepsodent ger vitare tänder."
-  "Pepsodent förbättrar din munhälsa."
-  "Colgate motverkar plack och tandsten."                         # should have more...
+  "Pepsodent gives whiter teath."
+  "Pepsodent improves you mouth health."
+  "Colgate prevents tartar and plaque"
 
 table coverAdjectives
-  "Pepsodent." "Gillar inte"  "Gillar"
-  "Pepsodent." "Negativ" "Positiv"
-  "Colgate." "Dålig"     "Bra"
+  "Pepsodent." "Dislike"  "Like"
+  "Pepsodent." "Positive" "Negative"
+  "Colgate."   "Good"     "Bad"
 
 #
 # tasks
@@ -62,43 +62,43 @@ task showIntro
 task elabInstr
   table elabInstr
   font arial
-  show text "(Klicka för att fortsätta)"       0 200
-  set &elabScenario TABLEROW                              # 1=high, 2=low
+  show text "(Click to continue)"       0 200
+  set &elabScenario TABLEROW                              # 1=low, 2=high
   if &elabScenario == 1
-    show text "Läs påståendena på nästa sida"                 0   0
-    show text "Räkna vokalerna på varje rad"                  0  40
-    show text "Multiplicera antalet med numret på samma rad"  0  80
-    show text "Summera alla tal. Skriv inte ner något"        0 120
+    show text "Read the statement on next page"                     0   0
+    show text "Count the vowels on each row"                        0  40
+    show text "Multiply the number with the number of the row"      0  80
+    show text "Add the numbers. Do not write anything down."        0 120
   fi
   if &elabScenario == 2
-    show text "Läs påståendena på nästa skärm"  0   0
-    show text "Var uppmärksam på tankar du har till vad som står skrivet"    0   40
-    show text "Du får ta hur lång tid du behöver"    0  80
+  show text "Read the statement on next page"                       0   0
+    show text "Pay attention to the thougt you have for the texts"  0   40
+    show text "Take as long as you need"                            0  80
   fi
   readmouse l 1 60000
 
 task coverInstr
   font arial
-  show text "Svara på följande påståenden så snabbt som möjligt."  0   0
+  show text "Answer the following statements as quickly as possible."  0   0
   delay 5000
 
 task dentolInstr
   font arial
-  show text "Svara på följande påståenden så snabbt som möjligt."  0   0
+  show text "Answer the following statements as quickly as possible."  0   0
   delay 5000
 
 task thankYouMessage
   font arial
-  show text "Tack för din medverkan!"  0   0
+  show text "Thank you for your participation!"  0   0
   delay 2000
 
 task dentolMessage
   font arial
-  show text "Dentol tandkräm."                 0 -80
-  show text "Bekämpar tandköttsinflammation."  0   0
-  show text "Ger en bättre andedräkt."         0  40
-  show text "Förebygger karies."               0  80
-  show text "(Klicka för att fortsätta)"       0 200
+  show text "Dentol toothpaste."                 0 -80
+  show text "Fights gum disease."                0   0
+  show text "Kills germs that cause bad breath." 0  40
+  show text "Prevents cavities."                 0  80
+  show text "(Click to continue)"       0 200
   readmouse l 1 60000
 
 task coverStatements
