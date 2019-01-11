@@ -4,6 +4,9 @@
 # 181229, Jonas Colmsjö
 #
 # References: Rice, 2017, Statistics and Data Anlysis
+#
+# 1=low elaboraton and 2=high elaboration
+#
 
 # Imports
 # ----------
@@ -85,18 +88,18 @@ def calc_stats(rows3, print_stats=False):
                        rows3.groupby('elabScenario')['RT'].count()],
                        axis=1, keys=['mean', 'median', 'var', 'min', 'max', 'count'])
 
-    rows3Low  = rows3[rows3['elabScenario'] == 2]
-    rows3High = rows3[rows3['elabScenario'] == 1]
+    rows3Low  = rows3[rows3['elabScenario'] == 1]
+    rows3High = rows3[rows3['elabScenario'] == 2]
 
-    # MH: Mean high elab, ML: Mean low elab, MD: MH- ML, SD: Variance for MH-ML
+    # MH: Mean high elab, ML: Mean low elab, MD: MH-ML, SD: Variance for MH-ML
     # SH2: Sample variance high elab, SL2: Sample variance low elab, SP: Pooled sample variance
-    MH = sdata.loc[1]['mean']
-    ML = sdata.loc[2]['mean']
+    MH = sdata.loc[2]['mean']
+    ML = sdata.loc[1]['mean']
     MD = MH - ML
-    SH2 = sdata.loc[1]['var']
-    SL2 = sdata.loc[2]['var']
-    NumH = sdata.loc[1]['count']
-    NumL = sdata.loc[2]['count']
+    SH2 = sdata.loc[2]['var']
+    SL2 = sdata.loc[1]['var']
+    NumH = sdata.loc[2]['count']
+    NumL = sdata.loc[1]['count']
     df = NumH+NumL-2
     SP = sqrt(((NumH-1)*SH2 +(NumL-1)*SL2) / (NumH+NumL-2))
     SD = SP*sqrt(1/NumH + 1/NumL)
@@ -181,8 +184,11 @@ def plots(rows):
 
 rows = read_data()
 
+
 if SKEWED:
     rows['RT'] = rows['RT'].apply(np.sqrt)  # np.sqrt, np.log, lambda x: 1/x etc.
+
+rows.to_csv(PATH_OUTPUT+'/data.csv')
 
 print('\n----- DATA -----\n', rows)
 sdata, cohen_d = calc_stats(rows, True)
